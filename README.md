@@ -1,6 +1,6 @@
 # MikroTik Router – Terraform Configuration
 
-Terraform configuration for managing a MikroTik RouterOS device using the [pavelkr/routeros](https://registry.terraform.io/providers/pavelkr/routeros/latest) provider. Generated from a RouterOS 6.49.7 binary backup (MikroTik CRS/CCR).
+Terraform configuration for managing a MikroTik RouterOS device using the [pavelkr/routeros](https://registry.terraform.io/providers/pavelkr/routeros/latest) provider. Network automation .
 
 ---
 
