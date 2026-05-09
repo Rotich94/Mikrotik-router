@@ -1,12 +1,12 @@
 # ============================================================
 # terraform.tfvars  –  Fill in your real values before running
-# Generated alongside mikrotik_router.tf from 04-05-2026.backup
+# mikrotik settings
 # ============================================================
 
 # --- Router connection ---
 router_url      = "https://192.168.1.1"   # change to your router's IP
 router_username = "timothy"
-router_password = "gaTeway2030"
+router_password = "set password"
 
 # --- LAN ---
 lan_network     = "192.168.1.0/24"
@@ -16,7 +16,7 @@ dhcp_pool_end   = "192.168.15.254"
 dns_server      = "8.8.8.8","192.168.55"
 
 # --- Users ---
-user_timothy_password = "gaTeway2030"
+user_timothy_password = ""
 user_peter_password   = "CHANGE_ME"
 
 # --- P2P tunnel addresses ---
