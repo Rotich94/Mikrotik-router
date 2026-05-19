@@ -16,7 +16,7 @@
 terraform {
   required_providers {
     routeros = {
-      source  = "pavelkr/routeros"
+      source  = "terraform-routeros/routeros"
       version = "~> 1.0"
     }
   }
@@ -37,23 +37,61 @@ provider "routeros" {
 # VARIABLES
 ###############################################################################
 
-variable "router_url"      { type = string }
-variable "router_username" { type = string; default = "timothy" }
-variable "router_password" { type = string; sensitive = true }
+variable "router_url" {
+  type = string
+}
+variable "router_username" {
+  type    = string
+  default = "timothy"
+}
+variable "router_password" {
+  type      = string
+  sensitive = true
+}
 
-variable "wan_interface"   { type = string; default = "ether1" }
-variable "lan_interface"   { type = string; default = "ether2" }
+variable "wan_interface" {
+  type    = string
+  default = "ether1"
+}
+variable "lan_interface" {
+  type    = string
+  default = "ether2"
+}
 
-variable "lan_network"     { type = string; default = "192.168.1.0/24" }
-variable "lan_gateway"     { type = string; default = "192.168.1.1" }
-variable "dhcp_pool_start" { type = string; default = "192.168.4.1" }
-variable "dhcp_pool_end"   { type = string; default = "192.168.15.254" }
-variable "dns_server"      { type = string; default = "8.8.8.8" }
+variable "lan_network" {
+  type    = string
+  default = "192.168.1.0/24"
+}
+variable "lan_gateway" {
+  type    = string
+  default = "192.168.1.1"
+}
+variable "dhcp_pool_start" {
+  type    = string
+  default = "192.168.4.1"
+}
+variable "dhcp_pool_end" {
+  type    = string
+  default = "192.168.15.254"
+}
+variable "dns_servers" {
+  type    = list(string)
+  default = ["8.8.8.8"]
+}
 
 # P2P links (fill with actual addresses)
-variable "p2p_ruiru_address"  { type = string; default = "" }
-variable "p2p_mombasa_address"{ type = string; default = "" }
-variable "p2p_mbs_address"    { type = string; default = "" }
+variable "p2p_ruiru_address" {
+  type    = string
+  default = ""
+}
+variable "p2p_mombasa_address" {
+  type    = string
+  default = ""
+}
+variable "p2p_mbs_address" {
+  type    = string
+  default = ""
+}
 
 ###############################################################################
 # SYSTEM IDENTITY
@@ -85,8 +123,14 @@ resource "routeros_system_user" "peter" {
   password = var.user_peter_password
 }
 
-variable "user_timothy_password" { type = string; sensitive = true }
-variable "user_peter_password"   { type = string; sensitive = true }
+variable "user_timothy_password" {
+  type      = string
+  sensitive = true
+}
+variable "user_peter_password" {
+  type      = string
+  sensitive = true
+}
 
 ###############################################################################
 # INTERFACES
@@ -162,7 +206,7 @@ resource "routeros_ip_dhcp_server" "dhcp1" {
 resource "routeros_ip_dhcp_server_network" "lan_network" {
   address    = var.lan_network
   gateway    = var.lan_gateway
-  dns_server = var.dns_server
+  dns_server = join(",", var.dns_servers)
   comment    = "Backmart Network / MSA Network"
 }
 
@@ -171,7 +215,7 @@ resource "routeros_ip_dhcp_server_network" "lan_network" {
 ###############################################################################
 
 resource "routeros_ip_dns" "main" {
-  servers            = [var.dns_server, "8.8.4.4"]
+  servers            = var.dns_servers
   allow_remote_requests = true
 }
 
@@ -292,20 +336,62 @@ resource "routeros_ip_firewall_nat" "dstnat_winbox" {
 
 # ---------- NAT destination variables ----------
 
-variable "zkteco_dst_ip"      { type = string; default = "" }
-variable "zkteco_dst_port"    { type = string; default = "" }
-variable "syspro_dst_ip"      { type = string; default = "" }
-variable "syspro_dst_port"    { type = string; default = "" }
-variable "fusion_dst_ip"      { type = string; default = "" }
-variable "fusion_dst_port"    { type = string; default = "" }
-variable "fusion_b_dst_ip"    { type = string; default = "" }
-variable "fusion_b_dst_port"  { type = string; default = "" }
-variable "kangaita_dst_ip"    { type = string; default = "" }
-variable "kangaita_dst_port"  { type = string; default = "" }
-variable "robisearch_dst_ip"  { type = string; default = "" }
-variable "robisearch_dst_port"{ type = string; default = "" }
-variable "hrm_dst_ip"         { type = string; default = "" }
-variable "winbox_dst_ip"      { type = string; default = "" }
+variable "zkteco_dst_ip" {
+  type    = string
+  default = ""
+}
+variable "zkteco_dst_port" {
+  type    = string
+  default = ""
+}
+variable "syspro_dst_ip" {
+  type    = string
+  default = ""
+}
+variable "syspro_dst_port" {
+  type    = string
+  default = ""
+}
+variable "fusion_dst_ip" {
+  type    = string
+  default = ""
+}
+variable "fusion_dst_port" {
+  type    = string
+  default = ""
+}
+variable "fusion_b_dst_ip" {
+  type    = string
+  default = ""
+}
+variable "fusion_b_dst_port" {
+  type    = string
+  default = ""
+}
+variable "kangaita_dst_ip" {
+  type    = string
+  default = ""
+}
+variable "kangaita_dst_port" {
+  type    = string
+  default = ""
+}
+variable "robisearch_dst_ip" {
+  type    = string
+  default = ""
+}
+variable "robisearch_dst_port" {
+  type    = string
+  default = ""
+}
+variable "hrm_dst_ip" {
+  type    = string
+  default = ""
+}
+variable "winbox_dst_ip" {
+  type    = string
+  default = ""
+}
 
 ###############################################################################
 # FIREWALL – FILTER (input chain, Winbox allow rule found in backup)

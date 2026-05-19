@@ -13,7 +13,7 @@ lan_network     = "192.168.1.0/24"
 lan_gateway     = "192.168.1.1"
 dhcp_pool_start = "192.168.4.1"
 dhcp_pool_end   = "192.168.15.254"
-dns_server      = "8.8.8.8","192.168.55"
+dns_servers     = ["8.8.8.8", "192.168.55.1"]
 
 # --- Users ---
 user_timothy_password = "gaTeway2030"
