@@ -1,9 +1,9 @@
 ###############################################################################
 # MikroTik Router – Terraform Configuration
-# Generated from: 04-05-2026.backup  (RouterOS 6.49.7 · MikroTik CRS / CCR)
+# RouterOS 6.49.7 · MikroTik CRS / CCR
 # Provider: terraform-provider-routeros (pavelkr/routeros)
 #
-# NOTE: The source file is a proprietary RouterOS binary backup.
+# NOTE: The source file is a proprietary RouterOS .
 # IP addresses, passwords, and keys visible in the binary have been
 # replaced with variables — fill in terraform.tfvars before applying.
 #
@@ -98,16 +98,16 @@ variable "p2p_mbs_address" {
 ###############################################################################
 
 resource "routeros_system_identity" "main" {
-  name = "MikroTik"   # router name as read from backup
+  name = "MikroTik"   # router name 
 }
 
 resource "routeros_system_clock" "main" {
-  time_zone_name = "Africa/Nairobi"   # extracted from backup
+  time_zone_name = "Africa/Nairobi"   
 }
 
 ###############################################################################
 # USERS
-# Passwords extracted from backup are hashed — reset them here.
+# Passwords 
 # The user 'admin' is the built-in default; only extra users are created.
 ###############################################################################
 
@@ -134,7 +134,7 @@ variable "user_peter_password" {
 
 ###############################################################################
 # INTERFACES
-# Ethernet ports found in backup: ether1–ether13 + P2P tunnels
+# Ethernet ports: ether1–ether13 + P2P tunnels
 ###############################################################################
 
 resource "routeros_interface_ethernet" "ether1" {
@@ -159,7 +159,7 @@ resource "routeros_interface_ethernet" "ether11" { name = "ether11" }
 resource "routeros_interface_ethernet" "ether12" { name = "ether12" }
 resource "routeros_interface_ethernet" "ether13" { name = "ether13" }
 
-# ---------- P2P EoIP / tunnel interfaces (as found in backup) ----------
+# ---------- P2P EoIP / tunnel interfaces ----------
 
 resource "routeros_interface_ethernet" "p2p_ruiru" {
   name    = "P2P TO RUIRU"
@@ -220,7 +220,7 @@ resource "routeros_ip_dns" "main" {
 }
 
 ###############################################################################
-# FIREWALL – NAT (source/destination rules extracted from backup)
+# FIREWALL – NAT 
 ###############################################################################
 
 # --- Masquerade (srcnat) for LAN → WAN ---
@@ -231,7 +231,7 @@ resource "routeros_ip_firewall_nat" "srcnat_lan_wan" {
   comment           = "LAN<>WAN for .4 network"
 }
 
-# --- DSTNAT rules (port-forwarding) found in backup ---
+# --- DSTNAT rules (port-forwarding)  ---
 
 resource "routeros_ip_firewall_nat" "dstnat_zkteco" {
   chain        = "dstnat"
@@ -394,7 +394,7 @@ variable "winbox_dst_ip" {
 }
 
 ###############################################################################
-# FIREWALL – FILTER (input chain, Winbox allow rule found in backup)
+# FIREWALL – FILTER 
 ###############################################################################
 
 resource "routeros_ip_firewall_filter" "allow_winbox" {
@@ -420,7 +420,7 @@ resource "routeros_ip_firewall_filter" "accept_established" {
 }
 
 ###############################################################################
-# SERVICES  (as found in backup: www, ftp, ssh, telnet, api, api-ssl, winbox)
+# SERVICES  
 ###############################################################################
 
 resource "routeros_ip_service" "www" {
@@ -535,7 +535,7 @@ resource "routeros_system_ntp_client" "main" {
 }
 
 ###############################################################################
-# QUEUE TYPES  (defaults present in backup)
+# QUEUE TYPES  (defaults)
 ###############################################################################
 
 # Default queue types exist in RouterOS out-of-the-box.
@@ -560,7 +560,7 @@ resource "routeros_queue_type" "pcq_upload" {
 }
 
 ###############################################################################
-# HOTSPOT  (server profile found in backup, using MikroTik default)
+# HOTSPOT  (server profile, using MikroTik default)
 ###############################################################################
 
 resource "routeros_ip_hotspot_profile" "default" {
